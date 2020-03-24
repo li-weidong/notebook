@@ -18,3 +18,7 @@ ObjToUrl(data) {
 },
 ```
 ### 
+
+# pathRewrite
+proxyTable设置代理解决跨域问题,可以用pathRewrite来改变/***，名称
+https://www.cnblogs.com/qdlhj/p/10110116.html
