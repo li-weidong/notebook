@@ -39,4 +39,57 @@ https://www.cnblogs.com/qdlhj/p/10110116.html
       })
   console.log(state, tag)
  },
-        ```
+ ```
+
+###表格中的头内容修改，此处可以变成 “  *备注  ”
+```javascript
+renderHeader: (h, params) => {
+                return h("div",{}, [
+                  h(
+                    "span",
+                    {
+                      props: {
+                        type: "text",
+                        size: "small",
+                        tooltip: true
+                      },
+                      style: {
+                        cursor: "pointer",
+                        padding: "3px",
+                        color: "rgb(45, 140, 240)",
+                      },
+                    },
+                    "*"
+                  ),
+                  ("span", {}, "备注")
+                ],);
+              },
+```
+
+###此处可以动态修改表格中的数据内容
+```javascript
+render: (h, params) => {
+                return h("div", [
+                  h(
+                    "span",
+                    {
+                      props: {
+                        type: "text",
+                        size: "small",
+                        tooltip: true
+                      },
+                      style: {
+                        // cursor: "pointer",
+                        padding: "3px"
+                        // color: "rgb(45, 140, 240)",
+                      },
+                      on：{
+                        click:()=>{}
+                      }
+                    },
+                    params.row.note
+                  ),
+
+                ]);
+              }
+```
