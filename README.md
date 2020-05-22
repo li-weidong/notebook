@@ -41,7 +41,7 @@ https://www.cnblogs.com/qdlhj/p/10110116.html
  },
  ```
 
-###表格中的头内容修改，此处可以变成 “  *备注  ”
+### 表格中的头内容修改，此处可以变成 “  *备注  ”
 ```javascript
 renderHeader: (h, params) => {
                 return h("div",{}, [
@@ -66,7 +66,7 @@ renderHeader: (h, params) => {
               },
 ```
 
-###此处可以动态修改表格中的数据内容
+### 此处可以动态修改表格中的数据内容
 ```javascript
 render: (h, params) => {
                 return h("div", [
@@ -93,7 +93,7 @@ render: (h, params) => {
                 ]);
               }
 ```
-###rend表格里生成动态输入框下拉框输入框单选等
+### rend表格里生成动态输入框下拉框输入框单选等
 ```javascript
 
  render:(h,params) => {
