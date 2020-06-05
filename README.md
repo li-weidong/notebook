@@ -282,3 +282,105 @@ export default Utils;
 
 
 ```
+### pdf文档流预览
+```javascript
+<template>
+	<div style="text-align: center;">
+		<canvas v-for="item in this.totalPage" :key="item" :id='"the-canvas" + item' class="pdf-content"></canvas>
+	</div>
+</template>
+
+<script>
+import PDFJS from "pdfjs-dist";
+import workerSrc from "pdfjs-dist/build/pdf.worker.entry";
+PDFJS.workerSrc = workerSrc;
+import axios from "axios";
+export default {
+	data() {
+		return {
+			blob:
+				"/srmpos/common/downloadFile?docId=1727e4e3176d72c68d9aaa44c58894fb",
+			totalPage: ""
+		};
+	},
+	methods: {
+		// init() {
+			
+		// 	return new Promise(resolve => {
+		// 		axios
+		// 			.post(
+		// 				"/ssssrmpos/common/dosswnloadFile?docId=1727e4e3ss176d72c68d9aaa44c58894fb",
+		// 				{
+		// 					responseType: "arraybuffer"
+		// 				}
+		// 			)
+		// 			.then(res => {
+		// 				// this.blob = new Blob([res], { type: "application/vnd.ms-excel" });
+		// 				this.blob = res;
+		// 				console.log(this.blob);
+		// 				resolve(res);
+		// 				// let objectUrl = URL.createObjectURL(blob);
+		// 				// window.location.href = objectUrl;
+		// 				// let url = URL.createObjectURL(blob);
+		// 				// let link = document.createElement("a");
+		// 				// link.setAttribute("href", url);
+		// 				// link.setAttribute("download", `fixPricingLedgerExport.xlsx`);
+		// 				// link.style.visibility = "hidden";
+		// 				// document.body.appendChild(link);
+		// 				// link.click();
+		// 				// document.body.removeChild(link);
+		// 			})
+		// 			.catch(() => {
+		// 				this.block.loading = false;
+		// 				this.$Modal.error({
+		// 					title: "a",
+		// 					content: "b"
+		// 				});
+		// 			});
+		// 	});
+		// }
+	},
+	mounted() {
+		let url =
+			"/saarmpos/comamon/daownloadFile?docId=1727ea064d5456aacca4ab23248b4b3e64";
+		let winW = document.documentElement.clientWidth;
+		let loadingTask = PDFJS.getDocument(url);
+		loadingTask.promise.then(
+			pdf => {
+				console.log(pdf);
+				let pageNum = pdf.numPages;
+				this.totalPage = pageNum;
+				console.log(this);
+				for (let i = 1; i <= this.totalPage; i++) {
+					pdf.getPage(i).then(function(page) {
+						console.log(page);
+
+						let viewport = page.getViewport({ scale: 1 });
+						let scale = (winW / viewport.width).toFixed(2);
+						let scaledViewport = page.getViewport({ scale: 2 });
+						console.log(scaledViewport);
+						let canvas = document.getElementById("the-canvas" + i);
+						console.log(canvas);
+						let context = canvas.getContext("2d");
+						canvas.height = scaledViewport.height;
+						canvas.width = scaledViewport.width;
+						let renderContext = {
+							canvasContext: context,
+							viewport: scaledViewport
+						};
+						let renderTask = page.render(renderContext);
+						renderTask.promise.then(function() {});
+					});
+				}
+			},
+			function(reason) {
+				console.error(reason);
+			}
+		);
+		// if(this.blob){
+
+		// }
+	}
+};
+</script>
+```
